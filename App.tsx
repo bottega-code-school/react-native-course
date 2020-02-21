@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import FeedScreen from "./screens/FeedScreen";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Text changed</Text>
+      <FeedScreen />
     </View>
   );
 }
