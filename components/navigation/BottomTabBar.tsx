@@ -1,5 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import bottomTabStyles from "../../styles/navigation/bottomTabStyles";
 
@@ -11,16 +13,16 @@ export default (props: IBottomTabBarProps) => {
   return (
     <View style={bottomTabStyles.container}>
       <TouchableOpacity onPress={() => props.navigate("Feed")}>
-        <Text style={{ color: "white" }}>Feed</Text>
+        <MaterialCommunityIcons name="newspaper" color="white" size={30} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigate("Search")}>
-        <Text>Search</Text>
+        <Ionicons name="md-search" color="white" size={30} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigate("PostForm")}>
-        <Text>Form</Text>
+        <MaterialCommunityIcons name="plus-circle" color="white" size={30} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigate("Account")}>
-        <Text>Account</Text>
+        <MaterialCommunityIcons name="settings" color="white" size={30} />
       </TouchableOpacity>
     </View>
   );
