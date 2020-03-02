@@ -10,7 +10,7 @@ interface IContainerProps {
 
 export default (props: IContainerProps) => {
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       {props.children}
       <BottomTabBar navigate={props.navigate} />
     </View>

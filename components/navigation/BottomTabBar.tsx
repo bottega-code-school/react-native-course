@@ -11,7 +11,7 @@ export default (props: IBottomTabBarProps) => {
   return (
     <View style={bottomTabStyles.container}>
       <TouchableOpacity onPress={() => props.navigate("Feed")}>
-        <Text>Feed</Text>
+        <Text style={{ color: "white" }}>Feed</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigate("Search")}>
         <Text>Search</Text>
