@@ -7,6 +7,8 @@ import SearchScreen from "../screens/SearchScreen";
 import AccountScreen from "../screens/AccountScreen";
 import PostFormScreen from "../screens/PostFormScreen";
 
+import { dark } from "../styles/colors";
+
 const AppStack = createStackNavigator(
   {
     Feed: FeedScreen,
@@ -15,7 +17,13 @@ const AppStack = createStackNavigator(
     PostForm: PostFormScreen
   },
   {
-    initialRouteName: "Feed"
+    initialRouteName: "Feed",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: dark
+      },
+      headerTintColor: "#fff"
+    }
   }
 );
 
