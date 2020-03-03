@@ -7,6 +7,8 @@ import SearchScreen from "../screens/SearchScreen";
 import AccountScreen from "../screens/AccountScreen";
 import PostFormScreen from "../screens/PostFormScreen";
 
+import HeaderLogo from "../components/images/HeaderLogo";
+
 import { dark } from "../styles/colors";
 
 const AppStack = createStackNavigator(
@@ -22,7 +24,8 @@ const AppStack = createStackNavigator(
       headerStyle: {
         backgroundColor: dark
       },
-      headerTintColor: "#fff"
+      headerTintColor: "#fff",
+      headerTitle: () => <HeaderLogo />
     }
   }
 );
