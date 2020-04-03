@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,8 @@ import API from "../../utils/api";
 import Button from "../../components/helpers/Button";
 import { formatErrors } from "../../utils/textFormatters";
 
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
 interface IAuthScreenProps {
   navigation: {
     navigate: (arg: string) => void;
@@ -24,6 +26,8 @@ export default (props: IAuthScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { currentUser } = useContext(CurrentUserContext);
 
   const screenTypeText = () => {
     if (formToShow === "LOGIN") {
@@ -147,6 +151,10 @@ export default (props: IAuthScreenProps) => {
       ) : (
         <Button text={buttonText()} onPress={handleSubmit} />
       )}
+
+      <View>
+        <Text style={{ color: "white" }}>{JSON.stringify(currentUser)}</Text>
+      </View>
     </ScrollView>
   );
 };
