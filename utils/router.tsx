@@ -7,6 +7,7 @@ import SearchScreen from "../screens/SearchScreen";
 import AccountScreen from "../screens/AccountScreen";
 import PostFormScreen from "../screens/PostFormScreen";
 import AuthScreen from "../screens/auth/AuthScreen";
+import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen";
 
 import HeaderLogo from "../components/images/HeaderLogo";
 
@@ -17,40 +18,41 @@ const AppStack = createStackNavigator(
     Feed: FeedScreen,
     Search: SearchScreen,
     Account: AccountScreen,
-    PostForm: PostFormScreen
+    PostForm: PostFormScreen,
   },
   {
     initialRouteName: "Feed",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: dark
+        backgroundColor: dark,
       },
       headerTintColor: "#fff",
-      headerTitle: () => <HeaderLogo />
-    }
+      headerTitle: () => <HeaderLogo />,
+    },
   }
 );
 
 const AuthStack = createStackNavigator(
   {
-    Auth: AuthScreen
+    Auth: AuthScreen,
   },
   {
     initialRouteName: "Auth",
     defaultNavigationOptions: {
-      headerShown: false
-    }
+      headerShown: false,
+    },
   }
 );
 
 export default createAppContainer(
   createSwitchNavigator(
     {
+      AuthLoading: AuthLoadingScreen,
       App: AppStack,
-      Auth: AuthStack
+      Auth: AuthStack,
     },
     {
-      initialRouteName: "Auth"
+      initialRouteName: "AuthLoading",
     }
   )
 );
