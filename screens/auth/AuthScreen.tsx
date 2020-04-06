@@ -4,8 +4,9 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
 
 import textInputStyles from "../../styles/forms/textInputStyles";
 const { textFieldWrapper, textField } = textInputStyles;
@@ -57,12 +58,16 @@ export default (props: IAuthScreenProps) => {
     const params = {
       auth: {
         email: email,
-        password: password
-      }
+        password: password,
+      },
     };
     API.post("memipedia_user_token", params)
-      .then(response => {
+      .then(async (response) => {
         if (response.data.jwt) {
+          await SecureStore.setItemAsync(
+            "memipedia_secure_token",
+            response.data.jwt
+          );
           props.navigation.navigate("Feed");
         } else {
           alert(
@@ -72,7 +77,7 @@ export default (props: IAuthScreenProps) => {
 
         setIsSubmitting(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setIsSubmitting(false);
         alert(
           "It looks like you typed in the wrong email or password, please try again"
@@ -84,11 +89,11 @@ export default (props: IAuthScreenProps) => {
     const params = {
       user: {
         email: email,
-        password: password
-      }
+        password: password,
+      },
     };
     API.post("memipedia_users", params)
-      .then(response => {
+      .then((response) => {
         console.log("Res for creating user", response.data);
         if (response.data.memipedia_user) {
           props.navigation.navigate("Feed");
@@ -100,7 +105,7 @@ export default (props: IAuthScreenProps) => {
 
         setIsSubmitting(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setIsSubmitting(false);
         alert("Error creating user account");
       });
@@ -122,7 +127,7 @@ export default (props: IAuthScreenProps) => {
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={val => setEmail(val)}
+          onChangeText={(val) => setEmail(val)}
           style={textField}
           autoCapitalize="none"
           spellCheck={false}
@@ -133,7 +138,7 @@ export default (props: IAuthScreenProps) => {
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={val => setPassword(val)}
+          onChangeText={(val) => setPassword(val)}
           style={textField}
           secureTextEntry={true}
         />
