@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import Container from "../components/layouts/Container";
@@ -12,6 +12,7 @@ interface IFeedScreenProps {
 }
 export default (props: IFeedScreenProps) => {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getPosts();
@@ -29,17 +30,22 @@ export default (props: IFeedScreenProps) => {
       .then((response) => {
         console.log("res from posts", response.data);
         setPosts(response.data.memipedia_posts);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log("error from posts", error);
+        setIsLoading(false);
       });
   };
 
   return (
     <Container navigate={props.navigation.navigate}>
-      <Text>Feed screen</Text>
       <View style={{ marginTop: 20 }}>
-        <Text>{JSON.stringify(posts)}</Text>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text>{JSON.stringify(posts)}</Text>
+        )}
       </View>
     </Container>
   );
