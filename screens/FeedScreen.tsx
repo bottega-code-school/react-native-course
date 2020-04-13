@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator, ScrollView } from "react-native";
+import { View, ActivityIndicator, ScrollView } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 import Container from "../components/layouts/Container";
 import api from "../utils/api";
 import PostItem from "../components/posts/PostItem";
+import baseStyles from "../styles/common/baseStyles";
 
 interface IFeedScreenProps {
   navigation: {
@@ -45,7 +46,7 @@ export default (props: IFeedScreenProps) => {
         {isLoading ? (
           <ActivityIndicator />
         ) : (
-          <ScrollView>
+          <ScrollView style={baseStyles.containerWithBottomTabBar}>
             {posts.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
