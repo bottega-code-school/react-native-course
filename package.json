@@ -12,6 +12,8 @@
     "axios": "^0.19.2",
     "expo": "~36.0.0",
     "expo-constants": "~8.0.0",
+    "expo-image-picker": "~8.0.1",
+    "expo-permissions": "~8.0.0",
     "expo-secure-store": "^8.0.0",
     "minimist": "^1.2.5",
     "react": "~16.9.0",
