@@ -5,7 +5,7 @@ import { highlight, lightGrey } from "../../styles/colors";
 
 interface IButtonProps {
   text: string;
-  onPress: any;
+  onPress?: any;
   disabled?: boolean;
 }
 
@@ -17,7 +17,7 @@ export default (props: IButtonProps) => {
         height: 40,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 3
+        borderRadius: 3,
       }}
       {...props}
     >
@@ -25,7 +25,7 @@ export default (props: IButtonProps) => {
         style={{
           color: props.disabled ? highlight : "white",
           fontSize: 20,
-          fontWeight: "700"
+          fontWeight: "700",
         }}
       >
         {props.text}
