@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
+import * as SecureStore from "expo-secure-store";
 
+import api from "../utils/api";
 import PostImagePicker from "../components/posts/PostImagePicker";
 import Button from "../components/helpers/Button";
 
@@ -28,6 +30,25 @@ export default () => {
     return formData;
   };
 
+  const handleSubmit = async () => {
+    const token = await SecureStore.getItemAsync("memipedia_secure_token");
+
+    api
+      .post("memipedia_posts", buildForm(), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("res from creating a new post", response.data);
+      })
+      .catch((error) => {
+        console.log("error from creating new post", error);
+      });
+  };
+
   return (
     <View style={{ height: "100%" }}>
       <TextInput
@@ -48,7 +69,7 @@ export default () => {
         <PostImagePicker setPostImage={setPostImage} />
       </View>
 
-      <Button text="Submit" onPress={() => console.log("Submitting...")} />
+      <Button text="Submit" onPress={handleSubmit} />
 
       <View>
         <Text>{postImage ? postImage : null}</Text>
