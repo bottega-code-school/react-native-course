@@ -12,6 +12,7 @@ import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen";
 import HeaderLogo from "../components/images/HeaderLogo";
 
 import { dark } from "../styles/colors";
+import PostDetailScreen from "../screens/PostDetailScreen";
 
 const AppStack = createStackNavigator(
   {
@@ -19,6 +20,12 @@ const AppStack = createStackNavigator(
     Search: SearchScreen,
     Account: AccountScreen,
     PostForm: PostFormScreen,
+    PostDetail: {
+      screen: PostDetailScreen,
+      navigationOptions: {
+        headerLeft: null,
+      },
+    },
   },
   {
     initialRouteName: "Feed",
