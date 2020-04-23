@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
-  Text,
   View,
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Text,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import Container from "../components/layouts/Container";
@@ -24,9 +24,13 @@ interface ISearchScreenProps {
 export default (props: ISearchScreenProps) => {
   const [query, setQuery] = useState("");
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emptyQuery, setEmptyQuery] = useState(false);
 
   const handleSearch = async () => {
     const token = await SecureStore.getItemAsync("memipedia_secure_token");
+    setIsLoading(true);
+    setEmptyQuery(false);
 
     const params = {
       query,
@@ -42,11 +46,15 @@ export default (props: ISearchScreenProps) => {
         headers,
       })
       .then((response) => {
-        console.log("response from query", response.data);
+        if (response.data.memipedia_posts.length === 0) {
+          setEmptyQuery(true);
+        }
         setPosts(response.data.memipedia_posts);
+        setIsLoading(false);
       })
       .catch((error) => {
-        console.log("Error running query", error);
+        setIsLoading(false);
+        alert("Error running query");
       });
   };
 
@@ -66,11 +74,29 @@ export default (props: ISearchScreenProps) => {
     </View>
   );
 
+  const queryRenderer = () => {
+    if (isLoading) {
+      return <ActivityIndicator />;
+    } else if (emptyQuery) {
+      return (
+        <View style={{ paddingRight: 15, paddingLeft: 15 }}>
+          <Text style={{ color: "white" }}>
+            There were no posts matching your search
+          </Text>
+        </View>
+      );
+    } else if (posts && posts.length > 0) {
+      return <PostList posts={posts} navigate={props.navigation.navigate} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Container navigate={props.navigation.navigate}>
       {searchBar}
 
-      <PostList posts={posts} navigate={props.navigation.navigate} />
+      {queryRenderer()}
     </Container>
   );
 };
