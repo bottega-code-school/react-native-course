@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { TouchableOpacity, Image, View } from "react-native";
+import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
@@ -10,8 +10,14 @@ import { primary } from "../../styles/colors";
 interface IPostImagePickerProps {
   setPostImage: (arg: any) => void;
 }
-export default (props: IPostImagePickerProps) => {
+export default forwardRef((props: IPostImagePickerProps, ref) => {
   const [image, setImage] = useState(null);
+
+  useImperativeHandle(ref, () => ({
+    clearImage() {
+      setImage(null);
+    },
+  }));
 
   useEffect(() => {
     getPermissionAsync();
@@ -72,4 +78,4 @@ export default (props: IPostImagePickerProps) => {
       {contentRenderer()}
     </TouchableOpacity>
   );
-};
+});
