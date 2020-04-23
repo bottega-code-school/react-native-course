@@ -10,6 +10,11 @@ import * as SecureStore from "expo-secure-store";
 import Container from "../components/layouts/Container";
 import api from "../utils/api";
 import PostList from "../components/posts/PostList";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import searchStyles from "../styles/stacks/posts/searchStyles";
+
+const { searchFormContainer, searchTextInput, searchIcon } = searchStyles;
 
 interface ISearchScreenProps {
   navigation: {
@@ -46,17 +51,17 @@ export default (props: ISearchScreenProps) => {
   };
 
   const searchBar = (
-    <View>
+    <View style={searchFormContainer}>
       <TextInput
         value={query}
         onChangeText={(val) => setQuery(val)}
-        placeholderTextColor="white"
         placeholder="Search for a meme"
         onSubmitEditing={handleSearch}
+        style={searchTextInput}
       />
 
-      <TouchableOpacity style={{ marginTop: 20 }} onPress={handleSearch}>
-        <Text style={{ color: "white" }}>Search</Text>
+      <TouchableOpacity style={searchIcon} onPress={handleSearch}>
+        <Ionicons name="md-search" color="white" size={30} />
       </TouchableOpacity>
     </View>
   );
