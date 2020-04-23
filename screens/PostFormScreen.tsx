@@ -6,7 +6,12 @@ import api from "../utils/api";
 import PostImagePicker from "../components/posts/PostImagePicker";
 import Button from "../components/helpers/Button";
 
-export default () => {
+interface IPostFormScreenProps {
+  navigation: {
+    navigate: (screenName: string, data: any) => void;
+  };
+}
+export default (props: IPostFormScreenProps) => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [postImage, setPostImage] = useState(null);
@@ -46,6 +51,16 @@ export default () => {
       .then((response) => {
         console.log("res from creating a new post", response.data);
         setIsSubmitting(false);
+
+        if (response.data.memipedia_post) {
+          props.navigation.navigate("PostDetail", {
+            post: response.data.memipedia_post,
+          });
+        } else {
+          alert(
+            "There was an issue creating the post, all fields are required, and only images are allowed."
+          );
+        }
       })
       .catch((error) => {
         console.log("error from creating new post", error);
