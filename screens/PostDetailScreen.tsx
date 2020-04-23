@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import PostItem from "../components/posts/PostItem";
+import Container from "../components/layouts/Container";
+
+import postItemStyles from "../styles/stacks/posts/postItemStyles";
+const { contentWrapper, contentText } = postItemStyles;
 
 interface IPostDetailScreenProps {
   navigation: {
@@ -7,9 +12,10 @@ interface IPostDetailScreenProps {
     state: {
       params: {
         post: {
+          id: number;
           name: string;
           content: string;
-          post_image: string;
+          post_image_url: string;
         };
       };
     };
@@ -17,9 +23,16 @@ interface IPostDetailScreenProps {
 }
 
 export default (props: IPostDetailScreenProps) => {
+  const { post } = props.navigation.state.params;
   return (
-    <View style={{ marginTop: 30 }}>
-      <Text>Post detail screen</Text>
-    </View>
+    <Container navigate={props.navigation.navigate}>
+      <ScrollView>
+        <PostItem post={post} />
+
+        <View style={contentWrapper}>
+          <Text style={contentText}>{post.content}</Text>
+        </View>
+      </ScrollView>
+    </Container>
   );
 };
