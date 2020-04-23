@@ -11,6 +11,7 @@ import Container from "../components/layouts/Container";
 import api from "../utils/api";
 import PostItem from "../components/posts/PostItem";
 import baseStyles from "../styles/common/baseStyles";
+import PostList from "../components/posts/PostList";
 
 interface IFeedScreenProps {
   navigation: {
@@ -45,26 +46,13 @@ export default (props: IFeedScreenProps) => {
       });
   };
 
-  const handleItemPress = (post) => {
-    props.navigation.navigate("PostDetail", { post });
-  };
-
   return (
     <Container navigate={props.navigation.navigate}>
       <View>
         {isLoading ? (
           <ActivityIndicator />
         ) : (
-          <ScrollView style={baseStyles.containerWithBottomTabBar}>
-            {posts.map((post) => (
-              <TouchableOpacity
-                key={post.id}
-                onPress={() => handleItemPress(post)}
-              >
-                <PostItem post={post} />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          <PostList posts={posts} navigate={props.navigation.navigate} />
         )}
       </View>
     </Container>
