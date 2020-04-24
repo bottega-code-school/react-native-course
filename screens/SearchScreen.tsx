@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-  Text,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import Container from "../components/layouts/Container";
 import api from "../utils/api";
@@ -75,9 +69,7 @@ export default (props: ISearchScreenProps) => {
   );
 
   const queryRenderer = () => {
-    if (isLoading) {
-      return <ActivityIndicator />;
-    } else if (emptyQuery) {
+    if (emptyQuery) {
       return (
         <View style={{ paddingRight: 15, paddingLeft: 15 }}>
           <Text style={{ color: "white" }}>
@@ -86,7 +78,14 @@ export default (props: ISearchScreenProps) => {
         </View>
       );
     } else if (posts && posts.length > 0) {
-      return <PostList posts={posts} navigate={props.navigation.navigate} />;
+      return (
+        <PostList
+          getPosts={handleSearch}
+          isLoading={isLoading}
+          posts={posts}
+          navigate={props.navigation.navigate}
+        />
+      );
     } else {
       return null;
     }
